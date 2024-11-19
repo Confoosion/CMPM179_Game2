@@ -13,6 +13,7 @@ public class WalkSounds : MonoBehaviour
     private CharacterController controller;  // Reference to CharacterController for movement
     private bool isWalking = false;   // Keep track of whether the player is walking
     private bool onGrass = false;            // Keep track of whether the player is on grass
+    [SerializeField] bool nearBear = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,9 +33,12 @@ public class WalkSounds : MonoBehaviour
         }
         else if (move.magnitude == 0 && isWalking)
         {
-            // Player has stopped moving
-            isWalking = false;
-            audioSource.Stop();
+            if(!nearBear)
+            {
+                // Player has stopped moving
+                isWalking = false;
+                audioSource.Stop();
+            }
         }
     }
 
@@ -74,6 +78,7 @@ public class WalkSounds : MonoBehaviour
         }
         else if(collision.transform.CompareTag("BearHome"))
         {
+            nearBear = true;
             // Play some sort of constant bear growling sound
             audioSource.clip = bearSound;
             audioSource.loop = true;
@@ -109,6 +114,7 @@ public class WalkSounds : MonoBehaviour
         }
         else if(collision.transform.CompareTag("BearHome"))
         {
+            nearBear = false;
             if (audioSource.clip == bearSound) {
                 // Stop the bear growling sound
                 audioSource.Stop();

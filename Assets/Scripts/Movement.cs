@@ -53,8 +53,8 @@ public class Movement : MonoBehaviour
             else if (move.magnitude == 0 && isWalking)
             {
                 // Player has stopped moving
-                isWalking = false;
-                audioSource.Stop();
+                // isWalking = false;
+                // audioSource.Stop();
             }
         }
     }
